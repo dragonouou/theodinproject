@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Rock-Paper-Scissors Game</title>
+    </head>
+    <body>
+        <h1>Rock-Paper-Scissors Game</h1>
+        <h1><strong>Let's play game!</strong></h1>
+        <div class = "user_input">
+            <button id = "Rock" class = "user_input" onclick = "game(this.id)">ROCK</button>
+            <button id = "Paper"  class = "user_input" onclick = "game(this.id)">PAPER</input>
+            <button id = "Scissors" class = "user_input" onclick = "game(this.id)">SCISSORS</input>
+        </div>
+        <div class = "result">
+            <div class = "result">Player Score:</div>
+            <p id = "player_score" class = "result"></p>
+            <div class = "result">Computer Score:</div>
+            <p id = "computer_score" class = "result"></p>
+
+            <p id = "round_result" class = "result"></p>
+            <p id = "final_result" class = "result"></p>
+        </div>
+
+        <script>
+            let loseOptions = {
+                "Rock": "Paper",
+                "Paper": "Scissors",
+                "Scissors": "Rock"
+            }
+
+            var playerSelection, computerSelection;
+            var playerScore = 0;
+            var computerScore = 0;
+            var round = 0;
+
+            function computerPlay(){
+                var randomIndex = Math.floor(Math.random() * 3)
+                return Object.keys(loseOptions)[randomIndex];
+            }
+            
+            function playRound(playerSelection, computerSelection){
+                if (playerSelection === computerSelection){
+                    return "Draw! Both players used " + playerSelection;
+                } else if (loseOptions[playerSelection] === computerSelection){
+                    computerScore += 1;
+                    document.getElementById("computer_score").innerHTML = computerScore;
+                    return "You lose! " + computerSelection + " beats " + playerSelection;
+                } else {
+                    playerScore += 1;
+                    document.getElementById("player_score").innerHTML = playerScore;
+                    return "You win! " + playerSelection + " beats " + computerSelection;
+                } 
+            }
+
+            function game(userInput){
+                playerSelection =  userInput;
+                computerSelection = computerPlay();
+                document.getElementById("round_result").innerHTML = playRound(playerSelection, computerSelection);
+                round += 1;
+                if (round === 5){
+                    if (computerScore > playerScore){
+                        document.getElementById("final_result").innerHTML = "Final Result:Computer wins!";
+                    } else if (computerScore === playerScore){
+                        document.getElementById("final_result").innerHTML = "Final Result:Draw! No winner!";
+                    } else {
+                        document.getElementById("final_result").innerHTML = "Final Result:You win!";
+                    }
+                    reset();
+                }
+            }
+
+            function reset(){
+                round = 0;
+                playerScore = 0;
+                computerScore = 0;
+            }
+        </script>
+    </body>
+

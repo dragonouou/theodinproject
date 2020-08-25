@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <title>Document</title>
+    <style>
+        #container div footer{
+            vertical-align: middle;
+            border: 1px solid black;
+        }
+    </style>
+</head>
+
+<body>
+    <button id = "reset" onclick = "reset()">clear</button>
+    <div id = "container"></div>
+    <script>
+        function createGrid(rows, cols){
+
+            var board = document.getElementById("container");
+            while(board.firstChild){
+                board.removeChild(board.firstChild);
+            }
+
+            for(var i = 0; i < rows; i++){
+                var row = document.createElement("div");
+                for (var j = 0; j < cols; j++){
+                    var cell = document.createElement("footer");
+                    cell.setAttribute("class", "grid");
+                    cell.style.width = "25px";
+                    cell.style.height = "25px";
+                    cell.style.display = "inline-block";
+                    row.appendChild(cell);
+                }
+                document.getElementById("container").appendChild(row);
+            }
+
+            $(document).ready(function() {
+            $("footer").hover(
+                function(){
+                    $(this).css({"background-color":"white"});
+                },
+                function(){
+                    $(this).css({"background-color":"red"});
+                });
+            }); 
+        }
+        
+        function reset(){
+            while (true){
+                var row = parseInt(prompt("How many rows?"))
+                var col = parseInt(prompt("How many columns?"))
+                if (isNaN(row) || row <= 0 || isNaN(col) || col <= 0){
+                    alert("Rows and columns should be positive numbers!")
+                }else{
+                    createGrid(row,col);
+                    // var newBoard = document.getElementById("footer");
+                    // newBoard.addEventListener("mouseover",function(){
+                    //     this.style.backgroundColor = "red"
+                    // });
+                    break;
+                }
+            }
+        }
+
+        createGrid(16, 16);
+     
+    </script>
+</body>
+</html>
